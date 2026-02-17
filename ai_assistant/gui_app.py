@@ -3,22 +3,22 @@ from tkinter import scrolledtext
 from main import run_agent_loop  # We’ll adjust main.py to allow this
 from threading import Thread
 
-# 1️⃣ Create main window
+
 root = tk.Tk()
 root.title("AI Assistant")
 root.geometry("600x500")
 
-# 2️⃣ Chat display
+
 chat_display = scrolledtext.ScrolledText(root, wrap=tk.WORD)
 chat_display.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 chat_display.config(state=tk.DISABLED)
 
-# 3️⃣ User input
+
 user_input = tk.Entry(root, width=80)
 user_input.pack(padx=10, pady=(0, 10), side=tk.LEFT, expand=True)
 
 
-# 4️⃣ Send button
+
 def send_message():
     message = user_input.get()
     if message.strip() == "":
@@ -32,7 +32,7 @@ send_button = tk.Button(root, text="Send", command=send_message)
 send_button.pack(padx=(0, 10), pady=(0, 10), side=tk.RIGHT)
 
 
-# 5️⃣ Display function
+
 def display_message(sender, message):
     chat_display.config(state=tk.NORMAL)
     chat_display.insert(tk.END, f"{sender}: {message}\n\n")
@@ -40,7 +40,7 @@ def display_message(sender, message):
     chat_display.config(state=tk.DISABLED)
 
 
-# 6️⃣ Process AI message
+
 from brain.llm import ask_llm, SYSTEM_PROMPT
 from memory.long_term import store_memory, search_memory
 from tools.file_tools import save_chat, read_chat_history, auto_remember
@@ -57,8 +57,8 @@ def process_message(message):
     display_message("Assistant", reply)
 
 
-# 7️⃣ Bind Enter key
+
 root.bind('<Return>', lambda event: send_message())
 
-# 8️⃣ Start GUI
+
 root.mainloop()
